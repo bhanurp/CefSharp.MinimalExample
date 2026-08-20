@@ -28,7 +28,7 @@ jobs:
         with:
           enable-package-alias: true
           package-alias-tools: nuget
-          version: nuget-bug-hunt
+          version: 2.111.0
           download-repository: nuget-bughunt-binary
         env:
           JF_URL: ${{ secrets.JF_URL }}
