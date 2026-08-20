@@ -64,4 +64,4 @@ jobs:
         run: nuget pack CefSharp.MinimalExample.WinForms.nuspec
 
       - name: Push
-        run: nuget push CefSharp.MinimalExample.WinForms.*.nupkg --repo ${{ secrets.NUGET_LOCAL_REPO }}
+        run: nuget push CefSharp.MinimalExample.WinForms.*.nupkg --repo ${{ secrets.NUGET_VIRTUAL_REPO }}
