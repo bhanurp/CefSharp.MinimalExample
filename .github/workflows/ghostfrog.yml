@@ -60,8 +60,8 @@ jobs:
           </package>
           "@ | Out-File CefSharp.MinimalExample.WinForms.nuspec -Encoding UTF8
 
-      - name: Pack
-        run: nuget pack CefSharp.MinimalExample.WinForms.nuspec
+    #   - name: Pack
+    #     run: nuget pack CefSharp.MinimalExample.WinForms.nuspec
 
       - name: Push
         run: nuget push CefSharp.MinimalExample.WinForms.*.nupkg --repo ${{ secrets.NUGET_VIRTUAL_REPO }}
