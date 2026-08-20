@@ -1,0 +1,64 @@
+name: NuGet Ghost Frog Demo — CefSharp.MinimalExample
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+env:
+  JFROG_CLI_GHOST_FROG: "true"
+  JFROG_CLI_BUILD_NAME: cefsharp-ghostfrog-demo
+  JFROG_CLI_BUILD_NUMBER: ${{ github.run_number }}
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout CefSharp.MinimalExample
+        uses: actions/checkout@v4
+        with:
+          repository: cefsharp/CefSharp.MinimalExample
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        with:
+          enable-package-alias: true
+          package-alias-tools: nuget
+          version: nuget-bug-hunt
+          download-repository: nuget-bughunt-binary
+        env:
+          JF_URL: ${{ secrets.JF_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+      - name: Restore
+        run: nuget restore CefSharp.MinimalExample.sln --repo-resolve ${{ secrets.NUGET_VIRTUAL_REPO }}
+
+      - name: Build
+        run: msbuild CefSharp.MinimalExample.sln /p:Configuration=Release /m
+
+      - name: Create nuspec
+        shell: pwsh
+        run: |
+          @"
+          <?xml version="1.0"?>
+          <package>
+            <metadata>
+              <id>CefSharp.d>
+              <version>1.0.${{ github.run_number }}</version>                              <authors>ghos
+              <description>CefSharp WinForms minimal example — Ghost Frog dembuild</description>
+            </metadata>                                                                  <files>
+              <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.exe" target="tools\" />
+              <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.dll" target="tools\" />
+            </files>
+          </package>
+          "@ | Out-File CefSharp.MinimalExample.WinForms.nuspec -Encoding UTF8
+
+      - name: Pack
+        run: nuget pack Cefrms.nuspec
+
+      - name: Push
+        run: nuget push CefSharp.MinimalExample.WinForms.*.nupkg --repo ${{ secrets.NUGET_LOCAL_REPO }}
