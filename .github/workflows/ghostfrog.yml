@@ -54,8 +54,8 @@ jobs:
               <description>CefSharp WinForms minimal example — Ghost Frog demo build</description>
             </metadata>
             <files>
-              <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.exe" target="tools\" />
-              <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.dll" target="tools\" />
+              <file src="CefSharp.MinimalExample.WinForms\bin\AnyCPU\Release\net452\*.exe" target="tools\" />
+              <file src="CefSharp.MinimalExample.WinForms\bin\AnyCPU\Release\net452\*.dll" target="tools\" />
             </files>
           </package>
           "@ | Out-File CefSharp.MinimalExample.WinForms.nuspec -Encoding UTF8
