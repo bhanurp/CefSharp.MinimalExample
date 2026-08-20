@@ -18,7 +18,7 @@ jobs:
       - name: Checkout CefSharp.MinimalExample
         uses: actions/checkout@v4
         with:
-          repository: cefsharp/CefSharp.MinimalExample
+          repository: bhanurp/CefSharp.MinimalExample
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
@@ -47,10 +47,12 @@ jobs:
           <?xml version="1.0"?>
           <package>
             <metadata>
-              <id>CefSharp.d>
-              <version>1.0.${{ github.run_number }}</version>                              <authors>ghos
-              <description>CefSharp WinForms minimal example — Ghost Frog dembuild</description>
-            </metadata>                                                                  <files>
+              <id>CefSharp.MinimalExample.WinForms</id>
+              <version>1.0.${{ github.run_number }}</version>
+              <authors>ghostfrog</authors>
+              <description>CefSharp WinForms minimal example — Ghost Frog demo build</description>
+            </metadata>
+            <files>
               <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.exe" target="tools\" />
               <file src="CefSharp.MinimalExample.WinForms\bin\Release\*.dll" target="tools\" />
             </files>
@@ -58,7 +60,7 @@ jobs:
           "@ | Out-File CefSharp.MinimalExample.WinForms.nuspec -Encoding UTF8
 
       - name: Pack
-        run: nuget pack Cefrms.nuspec
+        run: nuget pack CefSharp.MinimalExample.WinForms.nuspec
 
       - name: Push
         run: nuget push CefSharp.MinimalExample.WinForms.*.nupkg --repo ${{ secrets.NUGET_LOCAL_REPO }}
