@@ -7,6 +7,7 @@ on:
 
 env:
   JFROG_CLI_GHOST_FROG: "true"
+  JFROG_RUN_NATIVE: "true"
   JFROG_CLI_BUILD_NAME: cefsharp-ghostfrog-demo
   JFROG_CLI_BUILD_NUMBER: ${{ github.run_number }}
 
